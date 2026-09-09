@@ -1,0 +1,97 @@
+import PlunkClient from "@plunk/node";
+
+type PlunkInstance = {
+  emails: {
+    send: (body: Record<string, unknown>) => Promise<unknown>;
+  };
+  events: {
+    track: (event: Record<string, unknown>) => Promise<unknown>;
+  };
+};
+
+type PlunkConstructor = new (key: string, options?: { baseUrl?: string }) => PlunkInstance;
+
+// Initialize Plunk client with secret API key
+const plunk = new (PlunkClient as unknown as PlunkConstructor)(process.env.PLUNK_API_KEY || "");
+
+export interface SendEmailOptions {
+  to: string;
+  subject: string;
+  body: string;
+  from?: string;
+  name?: string;
+  headers?: Record<string, string>;
+  subscribed?: boolean;
+}
+
+/**
+ * Send an email using Plunk
+ * @see https://docs.useplunk.com/api-reference/emails/send
+ */
+export async function sendEmail(options: SendEmailOptions) {
+  const { to, subject, body, name, headers, subscribed } = options;
+
+  try {
+    const success = await plunk.emails.send({
+      to,
+      subject,
+      body,
+      name,
+      headers,
+      subscribed,
+    });
+
+    if (success) {
+      console.log("Email sent successfully to:", to);
+      return { success: true };
+    }
+
+    return { success: false, error: "Failed to send email" };
+  } catch (error) {
+    console.error("Email sending error:", error);
+    throw error;
+  }
+}
+
+export interface TrackEventOptions {
+  event: string;
+  email: string;
+  data?: Record<string, string | { persistent: boolean; value: string }>;
+}
+
+/**
+ * Track an event for a contact in Plunk
+ * Events can trigger automated email sequences (automations)
+ * @see https://docs.useplunk.com/api-reference/events/track
+ */
+export async function trackEvent(options: TrackEventOptions) {
+  const { event, email, data } = options;
+
+  try {
+    const success = await plunk.events.track({
+      event,
+      email,
+      data,
+    });
+
+    if (success) {
+      console.log(`Event "${event}" tracked for:`, email);
+      return { success: true };
+    }
+
+    return { success: false, error: "Failed to track event" };
+  } catch (error) {
+    console.error("Event tracking error:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get the Plunk client instance for advanced usage
+ * Useful for accessing contacts API or other advanced features
+ */
+export function getPlunkClient() {
+  return plunk;
+}
+
+export { plunk };

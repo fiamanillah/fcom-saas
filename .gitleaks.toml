@@ -1,0 +1,4 @@
+title = "fcom-saas Gitleaks configuration"
+
+[extend]
+useDefault = true
