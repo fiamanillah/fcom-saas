@@ -4,11 +4,11 @@
 name: fcom-saas
 
 services:
-  web:
+  app:
     build:
-      context: ./apps/web
+      context: ./apps/app
       dockerfile: Dockerfile
-    container_name: fcom-saas-web
+    container_name: fcom-saas-app
     ports:
       - "3000:3000"
     environment:

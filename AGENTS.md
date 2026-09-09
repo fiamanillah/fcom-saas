@@ -42,10 +42,11 @@ This file provides context about the project for AI assistants.
 ```
 fcom-saas/
 ├── apps/
-│   ├── web/         # Frontend application
+│   ├── app/         # Frontend application
 │   └── server/      # Backend API
 ├── packages/
-│   └── db/          # Database schema
+│   ├── db/          # Database schema
+│   └── ui/          # Shared UI components
 ```
 
 ## Common Commands
@@ -92,7 +93,7 @@ fcom-saas/
 - `frontend.libraries:typescript:tanstack-virtual`. It belongs to `frontend:typescript:next`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
 - `frontend.stateManagement:typescript:zustand`. It belongs to `frontend:typescript:next`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
 - `frontend.ui:typescript:shadcn-ui`. It belongs to `frontend:typescript:next`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
-- `frontend:typescript:next`. Its generated target is `apps/web`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
+- `frontend:typescript:next`. Its generated target is `apps/app`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
 - `gitHooks:universal:lefthook`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
 - `staticAnalysis:universal:gitleaks`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.
 - `testing:typescript:msw`. Evidence is `listed` with `unverified` freshness. Verification maintainer: @Marve10s.

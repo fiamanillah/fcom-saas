@@ -77,7 +77,7 @@
   },
   "overrides": [
     {
-      "includes": ["**/components/ui/label.tsx"],
+      "includes": ["**/components/ui/label.tsx", "**/components/label.tsx"],
       "linter": {
         "rules": {
           "a11y": {

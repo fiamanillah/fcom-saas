@@ -5,5 +5,8 @@ export default defineConfig({
   format: "esm",
   outDir: "./dist",
   clean: true,
-  noExternal: [/@fcom-saas\/.*/],
+  deps: {
+    alwaysBundle: [/@fcom-saas\/.*/],
+    onlyBundle: false,
+  },
 });

@@ -220,7 +220,7 @@
       "toolId": "next",
       "ecosystem": "typescript",
       "source": "selected",
-      "targetPath": "apps/web",
+      "targetPath": "apps/app",
     },
     {
       "id": "backend:typescript:hono",

@@ -2,6 +2,7 @@ import { env } from "@fcom-saas/env/server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { createChildLogger } from "./lib/logger";
 
 const app = new Hono();
 
@@ -15,6 +16,7 @@ app.use(
 );
 
 app.get("/", (c) => {
+  createChildLogger({ route: "/", method: "GET" }).info("Root endpoint accessed");
   return c.text("OK");
 });
 
