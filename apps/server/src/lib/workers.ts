@@ -1,4 +1,4 @@
-import { Worker, type Job } from "bullmq";
+import { type Job, Worker } from "bullmq";
 
 import { connection, type EmailJobData, type NotificationJobData } from "./queue.js";
 

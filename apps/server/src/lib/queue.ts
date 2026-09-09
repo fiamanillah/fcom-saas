@@ -1,4 +1,4 @@
-import { Queue, type ConnectionOptions } from "bullmq";
+import { type ConnectionOptions, Queue } from "bullmq";
 
 export const connection: ConnectionOptions = {
   host: process.env.REDIS_HOST || "localhost",

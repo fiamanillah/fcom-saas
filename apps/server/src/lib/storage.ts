@@ -1,14 +1,14 @@
 import {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-  DeleteObjectCommand,
-  ListObjectsV2Command,
-  HeadObjectCommand,
   CopyObjectCommand,
-  type PutObjectCommandInput,
+  DeleteObjectCommand,
+  GetObjectCommand,
   type GetObjectCommandInput,
+  HeadObjectCommand,
+  ListObjectsV2Command,
   type ListObjectsV2CommandInput,
+  PutObjectCommand,
+  type PutObjectCommandInput,
+  S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -18,14 +18,14 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
  */
 export const r2Client = new S3Client({
   region: "auto",
-  endpoint: `https://${process.env.R2_ACCOUNT_ID!}.r2.cloudflarestorage.com`,
+  endpoint: `https://${process.env.R2_ACCOUNT_ID ?? ""}.r2.cloudflarestorage.com`,
   credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.R2_ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY ?? "",
   },
 });
 
-const BUCKET_NAME = process.env.R2_BUCKET_NAME!;
+const BUCKET_NAME = process.env.R2_BUCKET_NAME ?? "";
 
 /**
  * Storage utilities for common R2 operations
@@ -149,7 +149,7 @@ export async function listFiles(
 
   return {
     files: (response.Contents ?? []).map((item) => ({
-      key: item.Key!,
+      key: item.Key ?? "",
       size: item.Size,
       lastModified: item.LastModified,
     })),

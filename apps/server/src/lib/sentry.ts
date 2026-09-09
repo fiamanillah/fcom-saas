@@ -4,8 +4,8 @@ import { nodeProfilingIntegration } from "@sentry/profiling-node";
 // Sentry configuration from environment variables
 const dsn = process.env.SENTRY_DSN;
 const environment = process.env.SENTRY_ENVIRONMENT || "development";
-const tracesSampleRate = parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || "1.0");
-const profilesSampleRate = parseFloat(process.env.SENTRY_PROFILES_SAMPLE_RATE || "0.1");
+const tracesSampleRate = Number.parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || "1.0");
+const profilesSampleRate = Number.parseFloat(process.env.SENTRY_PROFILES_SAMPLE_RATE || "0.1");
 
 /**
  * Initialize Sentry for error tracking and performance monitoring

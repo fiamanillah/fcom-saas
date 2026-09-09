@@ -6,7 +6,7 @@
  *
  * @see https://mswjs.io/docs/basics/mocking-responses
  */
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 
 export const handlers = [
   // Example: Mock an external API call
