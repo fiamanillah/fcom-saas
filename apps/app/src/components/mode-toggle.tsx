@@ -6,7 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@fcom-saas/ui";
+} from "@syncdocket/ui";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 

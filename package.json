@@ -1,5 +1,5 @@
 {
-  "name": "fcom-saas",
+  "name": "syncdocket",
   "private": true,
   "workspaces": {
     "packages": [
@@ -24,23 +24,23 @@
     "check-types": "turbo check-types",
     "dev:app": "turbo -F app dev",
     "dev:server": "turbo -F server dev",
-    "db:push": "turbo -F @fcom-saas/db db:push",
-    "db:studio": "turbo -F @fcom-saas/db db:studio",
-    "db:generate": "turbo -F @fcom-saas/db db:generate",
-    "db:migrate": "turbo -F @fcom-saas/db db:migrate",
+    "db:push": "turbo -F @syncdocket/db db:push",
+    "db:studio": "turbo -F @syncdocket/db db:studio",
+    "db:generate": "turbo -F @syncdocket/db db:generate",
+    "db:migrate": "turbo -F @syncdocket/db db:migrate",
     "test": "bun run --filter app test && bun run --filter server test",
     "secrets:scan": "gitleaks git --redact --verbose",
     "secrets:scan:staged": "gitleaks git --pre-commit --redact --staged --verbose",
     "check": "biome check --write ."
   },
   "dependencies": {
-    "@fcom-saas/env": "workspace:*",
+    "@syncdocket/env": "workspace:*",
     "dotenv": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.12",
-    "@fcom-saas/config": "workspace:*",
+    "@syncdocket/config": "workspace:*",
     "@types/bun": "catalog:",
     "lefthook": "^2.1.12",
     "turbo": "2.10.12",

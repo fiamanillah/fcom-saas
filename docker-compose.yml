@@ -1,14 +1,14 @@
-# Docker Compose for fcom-saas
+# Docker Compose for syncdocket
 # Full-stack container orchestration
 
-name: fcom-saas
+name: syncdocket
 
 services:
   app:
     build:
       context: ./apps/app
       dockerfile: Dockerfile
-    container_name: fcom-saas-app
+    container_name: syncdocket-app
     ports:
       - "3000:3000"
     environment:
@@ -18,36 +18,36 @@ services:
     depends_on:
       - server
     networks:
-      - fcom-saas-network
+      - syncdocket-network
 
   server:
     build:
       context: ./apps/server
       dockerfile: Dockerfile
-    container_name: fcom-saas-server
+    container_name: syncdocket-server
     ports:
       - "3001:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATABASE_URL=postgresql://postgres:password@db:5432/fcom-saas
+      - DATABASE_URL=postgresql://postgres:password@db:5432/syncdocket
     restart: unless-stopped
     depends_on:
       - db
     networks:
-      - fcom-saas-network
+      - syncdocket-network
 
   db:
     image: postgres:16-alpine
-    container_name: fcom-saas-postgres
+    container_name: syncdocket-postgres
     environment:
-      POSTGRES_DB: fcom-saas
+      POSTGRES_DB: syncdocket
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
-      - fcom-saas_postgres_data:/var/lib/postgresql/data
+      - syncdocket_postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -55,11 +55,11 @@ services:
       retries: 5
     restart: unless-stopped
     networks:
-      - fcom-saas-network
+      - syncdocket-network
 
 networks:
-  fcom-saas-network:
+  syncdocket-network:
     driver: bridge
 
 volumes:
-  fcom-saas_postgres_data:
+  syncdocket_postgres_data:

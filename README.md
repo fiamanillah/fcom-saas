@@ -1,18 +1,24 @@
-# fcom-saas
+# SyncDocket
 
 This project was created with [Better Fullstack](https://github.com/Marve10s/Better-Fullstack) using the multi-ecosystem project graph.
 
 ## Stack
 
 - Frontend: next (typescript)
-- Backend: not selected
+- Backend: hono (typescript)
 
 ## Project Structure
 
 ```text
-fcom-saas/
+syncdocket/
 ├── apps/
-│   ├── web/         # Frontend application
+│   ├── app/         # Frontend application
+│   └── server/      # Backend API
+├── packages/
+│   ├── config/      # Shared TypeScript configuration
+│   ├── db/          # Database schema & migrations
+│   ├── env/         # Shared type-safe environment variables
+│   └── ui/          # Shared UI components
 └── package.json     # Root scripts for the generated graph
 ```
 

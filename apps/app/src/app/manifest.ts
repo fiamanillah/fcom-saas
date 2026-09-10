@@ -1,8 +1,8 @@
 export default function manifest() {
   return {
-    name: "fcom-saas",
-    short_name: "fcom-saas",
-    description: "my pwa app",
+    name: "SyncDocket",
+    short_name: "SyncDocket",
+    description: "SyncDocket - Docket and workflow management",
     start_url: "/new",
     display: "standalone",
     background_color: "#ffffff",

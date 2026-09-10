@@ -1,4 +1,4 @@
-title = "fcom-saas Gitleaks configuration"
+title = "syncdocket Gitleaks configuration"
 
 [extend]
 useDefault = true

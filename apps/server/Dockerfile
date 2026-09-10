@@ -1,4 +1,4 @@
-# Dockerfile for fcom-saas server
+# Dockerfile for syncdocket server
 # Optimized multi-stage build for Docker deployment
 
 # Build stage
@@ -18,7 +18,7 @@ RUN bun install --frozen-lockfile
 COPY . .
 
 # Build the application
-RUN bun run build --filter=@fcom-saas/server
+RUN bun run build --filter=server
 
 # Production stage
 FROM oven/bun:1-slim AS runner

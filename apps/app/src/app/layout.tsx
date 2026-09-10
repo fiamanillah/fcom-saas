@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "../index.css";
-import Header from "@/components/header";
 import Providers from "@/components/providers";
 
 const geistSans = Geist({
@@ -17,8 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "fcom-saas",
-  description: "fcom-saas",
+  metadataBase: new URL("https://syncdocket.com"),
+  title: {
+    default: "SyncDocket",
+    template: "%s | SyncDocket",
+  },
+  description: "SyncDocket - Docket and workflow management for modern teams",
 };
 
 export default function RootLayout({
@@ -29,12 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>
-          <div className="grid h-svh grid-rows-[auto_1fr]">
-            <Header />
-            {children}
-          </div>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import "@fcom-saas/env/app";
+import "@syncdocket/env/app";
 
 import { existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";

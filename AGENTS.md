@@ -1,4 +1,4 @@
-# fcom-saas
+# SyncDocket
 
 This file provides context about the project for AI assistants.
 
@@ -40,12 +40,14 @@ This file provides context about the project for AI assistants.
 ## Project Structure
 
 ```
-fcom-saas/
+syncdocket/
 ├── apps/
 │   ├── app/         # Frontend application
 │   └── server/      # Backend API
 ├── packages/
+│   ├── config/      # Shared config
 │   ├── db/          # Database schema
+│   ├── env/         # Environment variables
 │   └── ui/          # Shared UI components
 ```
 

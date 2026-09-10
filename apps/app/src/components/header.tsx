@@ -1,10 +1,14 @@
 "use client";
+import type { Route } from "next";
 import Link from "next/link";
 
 import { ModeToggle } from "./mode-toggle";
 
 export default function Header() {
-  const links = [{ to: "/", label: "Home" }] as const;
+  const links: { to: Route; label: string }[] = [
+    { to: "/", label: "Home" },
+    { to: "/auth", label: "Auth" },
+  ];
 
   return (
     <div>

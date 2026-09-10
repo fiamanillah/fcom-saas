@@ -1,6 +1,6 @@
 {
-  "name": "fcom-saas",
-  "short_name": "fcom-saas",
+  "name": "SyncDocket",
+  "short_name": "SyncDocket",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

@@ -1,5 +1,5 @@
 {
-  "name": "@fcom-saas/env",
+  "name": "@syncdocket/env",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -15,7 +15,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@fcom-saas/config": "workspace:*",
+    "@syncdocket/config": "workspace:*",
     "@types/bun": "catalog:",
     "typescript": "^7.0.2"
   }

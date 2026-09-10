@@ -1,1 +1,1 @@
-export { cn } from "@fcom-saas/ui";
+export { cn } from "@syncdocket/ui";

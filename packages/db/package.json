@@ -1,5 +1,5 @@
 {
-  "name": "@fcom-saas/db",
+  "name": "@syncdocket/db",
   "type": "module",
   "exports": {
     ".": {
@@ -17,14 +17,14 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@fcom-saas/env": "workspace:*",
+    "@syncdocket/env": "workspace:*",
     "dotenv": "catalog:",
     "drizzle-orm": "^0.45.2",
     "pg": "^8.23.0",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@fcom-saas/config": "workspace:*",
+    "@syncdocket/config": "workspace:*",
     "@types/pg": "^8.23.1",
     "drizzle-kit": "^0.31.10",
     "typescript": "^7.0.2"

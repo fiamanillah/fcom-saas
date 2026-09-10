@@ -1,4 +1,4 @@
-import { env } from "@fcom-saas/env/server";
+import { env } from "@syncdocket/env/server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";

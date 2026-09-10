@@ -1,4 +1,4 @@
-import { env } from "@fcom-saas/env/server";
+import { env } from "@syncdocket/env/server";
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 
 import * as schema from "./schema/index";

@@ -10,8 +10,8 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@fcom-saas/env": "workspace:*",
-    "@fcom-saas/ui": "workspace:*",
+    "@syncdocket/env": "workspace:*",
+    "@syncdocket/ui": "workspace:*",
     "@tanstack/react-form": "^1.33.5",
     "@tanstack/react-query": "^5.102.8",
     "@tanstack/react-query-devtools": "^5.102.8",
@@ -35,7 +35,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
-    "@fcom-saas/config": "workspace:*",
+    "@syncdocket/config": "workspace:*",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.1",

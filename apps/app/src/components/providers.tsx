@@ -1,6 +1,6 @@
 "use client";
 
-import { Toaster } from "@fcom-saas/ui";
+import { Toaster } from "@syncdocket/ui";
 import { ThemeProvider } from "./theme-provider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
