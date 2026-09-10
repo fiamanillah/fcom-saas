@@ -222,6 +222,16 @@ export function LoginForm() {
             )}
           </form.Subscribe>
         </form>
+
+        <p className="text-center text-xs text-zinc-400">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/auth/signup"
+            className="font-medium text-white underline underline-offset-4 transition-colors hover:text-zinc-200"
+          >
+            Sign up
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );

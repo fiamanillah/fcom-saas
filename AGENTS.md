@@ -43,7 +43,8 @@ This file provides context about the project for AI assistants.
 syncdocket/
 ├── apps/
 │   ├── app/         # Frontend application
-│   └── server/      # Backend API
+│   └── server/      # Backend API (Modular Monolith with Vertical Slices)
+├── docs/            # Engineering guides & Architecture Decision Records (ADRs)
 ├── packages/
 │   ├── config/      # Shared config
 │   ├── db/          # Database schema
@@ -59,6 +60,38 @@ syncdocket/
 - `bun test` - Run tests
 - `bun db:push` - Push database schema
 - `bun db:studio` - Open database UI
+
+## Backend Architecture Standards: Modular Monolith & Vertical Slices
+
+All backend development in `apps/server` MUST adhere to the **Modular Monolith & Vertical Slices** standard. Detailed reference is located in [`docs/engineering-guide.md`](docs/engineering-guide.md) and [`apps/server/AGENTS.md`](apps/server/AGENTS.md).
+
+### 1. Mandatory Directory Structure
+Modules live under `apps/server/src/modules/<domain>/`:
+- `<domain>.manifest.ts` - Declarative contract: entitlements, permissions, operations metadata.
+- `index.ts` - **ONLY** file other modules may import from (Public Contract).
+- `schema.ts` - Drizzle tables owned exclusively by this module.
+- `routes.ts` - Hono route definitions & middleware wiring ONLY (no business logic).
+- `migrations/` - DB migrations owned exclusively by this module.
+- `events/` - Domain event listeners & idempotency subscribers.
+- `internal/` - Private domain services and clients (never imported externally).
+- `features/<feature-name>/` - Vertical slice: `<name>.handler.ts`, `<name>.dto.ts`, `<name>.test.ts`.
+
+### 2. Non-Negotiable Rules for AI Agents
+1. **No Cross-Module Joins:** Never execute SQL joins across tables owned by different domains. Store references (e.g. `contactId: text("contact_id")`) and resolve via public contracts (`index.ts`) or domain events.
+2. **Transactional Outbox for Events:** Never call `eventBus.publish()` bare after DB writes. All domain events MUST be inserted into an `outboxEvents` table inside the same `db.transaction()` as the state mutation.
+3. **Idempotent Event Delivery:** All listeners must check a `processedEvents` ledger before executing side effects. Duplicate delivery will happen on retries.
+4. **Dual-Gate Authorization:** Routes must gate on tenant feature entitlement (`requireFeature`) and user permissions (`requirePermission`). Never hardcode plan names (e.g. `plan === 'enterprise'`) in handlers.
+5. **Strict Boundary Encapsulation:** External modules may only import from `apps/server/src/modules/<domain>/index.ts`. Direct access to another module's `internal/` or `features/` will fail CI boundary checks.
+6. **Isolated Migrations:** Each module manages its own migrations under `migrations/`. CI fails if a migration modifies tables not owned by that module.
+7. **Cross-Module Aggregation:** Use BFF endpoints (`apps/server/src/bff/`) for stitching multi-module data on dashboards, or dedicated read-models / CQRS views for high-throughput queries.
+
+### 3. Vertical Slice & Clean Code Standards
+- **One request = One handler:** Handlers are the unit of transaction. Wrap multiple writes in `db.transaction()`.
+- **Boundary Validation:** Every request body is parsed through a Zod DTO schema before reaching business logic.
+- **Rule of Three:** Do not create shared services in `internal/` unless 3+ features genuinely require the identical logic.
+- **HTTP Agnostic:** Internal services and handlers take/return plain TypeScript data, never `Request`/`Response` objects.
+- **Business-First Naming:** Name folders and functions after real business actions (`dispatch-courier`), not technical layers.
+- **ADRs:** Document non-trivial architectural decisions in `docs/adr/NNN-title.md` (see [`docs/adr/000-template.md`](docs/adr/000-template.md) and [`docs/adr/001-modular-monolith-and-vertical-slices.md`](docs/adr/001-modular-monolith-and-vertical-slices.md)).
 
 ## Better Fullstack project context
 

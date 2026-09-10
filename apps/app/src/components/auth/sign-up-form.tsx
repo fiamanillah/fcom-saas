@@ -198,7 +198,17 @@ export function SignUpForm() {
           </form.Subscribe>
         </form>
 
-        <div className="space-y-1.5 pt-1 text-center text-[10.5px]">
+        <p className="text-center text-xs text-zinc-400">
+          Already have an account?{" "}
+          <Link
+            href="/auth/login"
+            className="font-medium text-white underline underline-offset-4 transition-colors hover:text-zinc-200"
+          >
+            Log in
+          </Link>
+        </p>
+
+        <div className="space-y-1.5 pt-0.5 text-center text-[10.5px]">
           <p className="text-zinc-500 leading-normal">
             By continuing you agree to SyncDocket&apos;s{" "}
             <Link
