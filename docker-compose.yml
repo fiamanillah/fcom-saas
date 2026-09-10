@@ -1,14 +1,86 @@
 # Docker Compose for syncdocket
-# Full-stack container orchestration
+# Full-stack container orchestration & local infrastructure
 
 name: syncdocket
 
 services:
+  # ---------------------------------------------------------------------------
+  # Core Infrastructure Services (Started by default: `docker compose up -d`)
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: syncdocket-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - syncdocket_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - syncdocket-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: syncdocket-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - syncdocket_redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - syncdocket-network
+
+  # ---------------------------------------------------------------------------
+  # Application Services (Run with: `docker compose --profile full up -d`)
+  # ---------------------------------------------------------------------------
+  server:
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile
+    container_name: syncdocket-server
+    profiles:
+      - full
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-postgres}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-dev-jwt-secret-syncdocket-change-in-prod}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost:3000}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - syncdocket-network
+
   app:
     build:
-      context: ./apps/app
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./apps/app/Dockerfile
     container_name: syncdocket-app
+    profiles:
+      - full
     ports:
       - "3000:3000"
     environment:
@@ -20,46 +92,10 @@ services:
     networks:
       - syncdocket-network
 
-  server:
-    build:
-      context: ./apps/server
-      dockerfile: Dockerfile
-    container_name: syncdocket-server
-    ports:
-      - "3001:3000"
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - DATABASE_URL=postgresql://postgres:password@db:5432/syncdocket
-    restart: unless-stopped
-    depends_on:
-      - db
-    networks:
-      - syncdocket-network
-
-  db:
-    image: postgres:16-alpine
-    container_name: syncdocket-postgres
-    environment:
-      POSTGRES_DB: syncdocket
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    volumes:
-      - syncdocket_postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-    networks:
-      - syncdocket-network
-
 networks:
   syncdocket-network:
     driver: bridge
 
 volumes:
   syncdocket_postgres_data:
+  syncdocket_redis_data:

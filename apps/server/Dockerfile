@@ -10,6 +10,8 @@ WORKDIR /app
 COPY package.json bun.lock* ./
 COPY apps/server/package.json ./apps/server/
 COPY packages/db/package.json ./packages/db/
+COPY packages/env/package.json ./packages/env/
+COPY packages/config/package.json ./packages/config/
 
 # Install dependencies
 RUN bun install --frozen-lockfile
@@ -37,4 +39,4 @@ RUN bun install --production --frozen-lockfile
 
 EXPOSE 3000
 
-CMD ["bun", "run", "dist/index.js"]
+CMD ["bun", "run", "dist/index.mjs"]
