@@ -6,17 +6,17 @@
     "build": "tsdown",
     "check-types": "tsc -b",
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
-    "db:migrate": "bun run src/lib/migrate.ts",
+    "db:migrate": "turbo -F @syncdocket/db db:migrate",
     "test": "vitest run --passWithNoTests",
+    "check:boundaries": "bun run ../../scripts/check-module-boundaries.ts",
+    "lint:imports": "bun run ../../scripts/check-module-boundaries.ts",
     "dev": "bun run --hot src/index.ts",
     "start": "NODE_ENV=production bun run dist/index.mjs"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1128.0",
-    "@aws-sdk/s3-request-presigner": "^3.1128.0",
     "@syncdocket/db": "workspace:*",
     "@syncdocket/env": "workspace:*",
-    "@plunk/node": "^3.0.3",
+    "@syncdocket/infra": "workspace:*",
     "@sentry/node": "^10.73.0",
     "@sentry/profiling-node": "^10.73.0",
     "bullmq": "^6.3.4",
@@ -24,6 +24,7 @@
     "drizzle-orm": "^0.45.2",
     "hono": "^4.13.7",
     "ioredis": "^6.0.0",
+    "pg": "^8.23.0",
     "pino": "^10.3.1",
     "pino-http": "^11.0.0",
     "zod": "catalog:"
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@syncdocket/config": "workspace:*",
     "@types/bun": "catalog:",
+    "@types/pg": "^8.23.1",
     "@vitest/coverage-v8": "catalog:",
     "@vitest/ui": "catalog:",
     "drizzle-kit": "^0.31.10",

@@ -26,6 +26,9 @@ jobs:
       - name: Lint
         run: bunx @biomejs/biome check .
 
+      - name: Check Module Boundaries
+        run: bun run check:boundaries
+
       - name: Type check
         run: bun run check-types
 

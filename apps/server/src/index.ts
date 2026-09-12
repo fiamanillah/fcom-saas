@@ -1,8 +1,8 @@
 import { env } from "@syncdocket/env/server";
+import { createChildLogger } from "@syncdocket/infra/logger";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { createChildLogger } from "./lib/logger";
 import { authManifest, authRoutes } from "./modules/auth";
 import { errorHandler } from "./utils/error-handler";
 

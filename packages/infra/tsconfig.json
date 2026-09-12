@@ -1,0 +1,3 @@
+{
+  "extends": "@syncdocket/config/tsconfig.base.json"
+}

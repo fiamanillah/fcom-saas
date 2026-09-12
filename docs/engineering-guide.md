@@ -19,9 +19,8 @@ Every domain capability in `apps/server` MUST follow this exact directory struct
 apps/server/src/modules/<domain>/
 ├── <domain>.manifest.ts        # Declarative contract: entitlements, permissions, ops metadata
 ├── index.ts                    # ONLY file other modules may import from
-├── schema.ts                   # Drizzle tables owned exclusively by this module
+├── schema.ts                   # Module schema re-exports from @syncdocket/db (packages/db/src/schema/<domain>/)
 ├── routes.ts                   # Hono route definitions & middleware assembly
-├── migrations/                 # This module's DB migrations ONLY
 ├── events/
 │   ├── index.ts
 │   └── <event-name>.listener.ts
@@ -225,12 +224,13 @@ router.post("/inbox/reply",
 
 ---
 
-## 5. Schema & Migration Ownership
+## 5. Schema & Migration Ownership (Option A: Centralized per Module)
 
-- Each module's database migrations live under its own `migrations/` folder.
-- **CI must fail** if a migration file modifies a table not owned by that module. Enforce with a diff-check script — don't rely on code review memory.
-- No shared "god" migration folder.
-- No module may execute raw SQL against another module's tables, including for "quick fixes."
+- Drizzle ORM schemas are centralized under `packages/db/src/schema/`, strictly organized into sub-folders per module (e.g. `packages/db/src/schema/auth/`, `packages/db/src/schema/inbox/`).
+- Each module's schema is exported distinctly from `@syncdocket/db` (e.g., `authSchema`), and re-exported by the domain module's local `schema.ts`.
+- `drizzle-kit` runs migrations reliably in a single place (`packages/db/src/migrations/`).
+- **Strict Boundary Rule:** Centralizing table definitions in `packages/db` does NOT permit cross-module SQL joins. Never execute joins across domain boundaries; store reference IDs and resolve via public contracts (`index.ts`) or asynchronous events.
+- No module may execute raw SQL against another module's tables.
 
 ---
 
@@ -264,24 +264,30 @@ Without this, once you have 20+ modules, nobody can answer "why is the app slow 
 
 Enforce modular isolation in code analysis and linting:
 
-```javascript
-// eslint.config.js / biome config
-rules: {
-  "no-restricted-imports": [
-    "error",
-    {
-      patterns: [
-        {
-          group: ["@/modules/*/internal/*", "@/modules/*/features/*"],
-          message: "Import only from the module root index.ts.",
-        },
-      ],
-    },
-  ],
+```json
+// biome.json: linter.rules.style.noRestrictedImports
+"noRestrictedImports": {
+  "level": "error",
+  "options": {
+    "patterns": [
+      {
+        "group": [
+          "@/modules/*/internal/*",
+          "@/modules/*/internal/**",
+          "@/modules/*/internal",
+          "@/modules/*/features/*",
+          "@/modules/*/features/**",
+          "@/modules/*/features"
+        ],
+        "message": "Import only from the module root index.ts."
+      }
+    ]
+  }
 }
 ```
 
-Add a second layer with `dependency-cruiser` (or equivalent AST check) in CI to catch violations that linters miss (e.g. dynamic imports). A boundary violation should fail the build with the same severity as a failing test — never a warning that gets ignored.
+A dedicated AST linter (`scripts/check-module-boundaries.ts`) runs on every commit via **Lefthook** (`pre-commit`) and in **GitHub Actions CI** (`bun run check:boundaries`). It catches both static and dynamic cross-module imports traversing via path aliases (`@/modules/*`) or relative paths (`../other-module/internal/*`).
+
 
 ---
 
@@ -357,7 +363,7 @@ Do **not** attempt microservice extraction until every single box is checked:
 
 - [ ] Module has zero shared DB transactions with any other module
 - [ ] Module has zero cron jobs referencing another module's tables directly
-- [ ] All cross-module calls go through the outbox/event bus or the public contract — verified via dependency-cruiser report, not assumption
+- [ ] All cross-module calls go through the outbox/event bus or the public contract — verified via boundary check (`bun run check:boundaries`), not assumption
 - [ ] Module's event contract (event names + payload shapes) is documented and versioned
 - [ ] Observability (Section 6) already shows this module's real load/latency independent of others
 

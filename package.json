@@ -31,7 +31,9 @@
     "test": "bun run --filter app test && bun run --filter server test",
     "secrets:scan": "gitleaks git --redact --verbose",
     "secrets:scan:staged": "gitleaks git --pre-commit --redact --staged --verbose",
-    "check": "biome check --write ."
+    "check:boundaries": "bun run scripts/check-module-boundaries.ts",
+    "lint:imports": "bun run scripts/check-module-boundaries.ts",
+    "check": "bun run check:boundaries && biome check --write ."
   },
   "dependencies": {
     "@syncdocket/env": "workspace:*",

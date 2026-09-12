@@ -1,4 +1,9 @@
+// Module schemas (Option A: Centralized Drizzle schemas per module)
+export * as authSchema from "./auth";
+export * from "./auth";
 export * from "./example";
+export * as outboxSchema from "./outbox";
+export * from "./outbox";
 export * from "./task";
 
 // <better-fullstack:recipe-schema-exports sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855>

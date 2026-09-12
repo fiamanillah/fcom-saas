@@ -10,7 +10,10 @@ import { registerSchema } from "./register.dto";
 import { registerHandler } from "./register.handler";
 
 // Mock @syncdocket/db for unit & integration testing without external Postgres requirement
-vi.mock("@syncdocket/db", () => {
+vi.mock("@syncdocket/db", async () => {
+  const { users } = await import("@syncdocket/db/schema/auth");
+  const { outboxEvents } = await import("@syncdocket/db/schema/outbox");
+
   const existingUsers: Array<{ id: string; email: string }> = [
     { id: "existing-id", email: "existing@example.com" },
   ];
@@ -42,26 +45,23 @@ vi.mock("@syncdocket/db", () => {
   const mockDb = {
     select: vi.fn(() => ({
       from: vi.fn(() => ({
-        where: vi.fn(
-          (condition: {
-            queryChunks?: Array<{
-              value?: unknown;
-              constructor?: { name: string };
-            }>;
-          }) => {
-            const paramChunk = condition?.queryChunks?.find(
-              (chunk) =>
-                chunk && typeof chunk.value === "string" && chunk.constructor?.name === "Param",
-            );
-            const email = (paramChunk?.value as string) ?? "";
-            return {
-              limit: vi.fn().mockImplementation(() => {
-                const match = existingUsers.find((u) => u.email === email);
-                return Promise.resolve(match ? [{ id: match.id }] : []);
-              }),
-            };
-          },
-        ),
+        where: vi.fn((condition: { queryChunks?: Array<{ value?: unknown }> }) => {
+          let email = "";
+          if (condition?.queryChunks) {
+            for (const chunk of condition.queryChunks) {
+              if (chunk && typeof chunk.value === "string") {
+                email = chunk.value;
+                break;
+              }
+            }
+          }
+          return {
+            limit: vi.fn().mockImplementation(() => {
+              const match = existingUsers.find((u) => u.email === email);
+              return Promise.resolve(match ? [{ id: match.id }] : []);
+            }),
+          };
+        }),
       })),
     })),
     transaction: vi.fn(
@@ -69,7 +69,12 @@ vi.mock("@syncdocket/db", () => {
     ),
   };
 
-  return { db: mockDb };
+  return {
+    db: mockDb,
+    users,
+    outboxEvents,
+    authOutboxEvents: outboxEvents,
+  };
 });
 
 describe("Auth Module: Register Feature", () => {

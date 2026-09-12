@@ -69,9 +69,8 @@ All backend development in `apps/server` MUST adhere to the **Modular Monolith &
 Modules live under `apps/server/src/modules/<domain>/`:
 - `<domain>.manifest.ts` - Declarative contract: entitlements, permissions, operations metadata.
 - `index.ts` - **ONLY** file other modules may import from (Public Contract).
-- `schema.ts` - Drizzle tables owned exclusively by this module.
+- `schema.ts` - Module schema re-exports from `@syncdocket/db` (defined in `packages/db/src/schema/<domain>/`).
 - `routes.ts` - Hono route definitions & middleware wiring ONLY (no business logic).
-- `migrations/` - DB migrations owned exclusively by this module.
 - `events/` - Domain event listeners & idempotency subscribers.
 - `internal/` - Private domain services and clients (never imported externally).
 - `features/<feature-name>/` - Vertical slice: `<name>.handler.ts`, `<name>.dto.ts`, `<name>.test.ts`.
@@ -82,7 +81,7 @@ Modules live under `apps/server/src/modules/<domain>/`:
 3. **Idempotent Event Delivery:** All listeners must check a `processedEvents` ledger before executing side effects. Duplicate delivery will happen on retries.
 4. **Dual-Gate Authorization:** Routes must gate on tenant feature entitlement (`requireFeature`) and user permissions (`requirePermission`). Never hardcode plan names (e.g. `plan === 'enterprise'`) in handlers.
 5. **Strict Boundary Encapsulation:** External modules may only import from `apps/server/src/modules/<domain>/index.ts`. Direct access to another module's `internal/` or `features/` will fail CI boundary checks.
-6. **Isolated Migrations:** Each module manages its own migrations under `migrations/`. CI fails if a migration modifies tables not owned by that module.
+6. **Centralized Schemas & Migrations (Option A):** Drizzle schemas live in `packages/db/src/schema/<domain>/` and are re-exported by the module's `schema.ts`. `drizzle-kit` generates and applies migrations reliably in `packages/db/src/migrations/`.
 7. **Cross-Module Aggregation:** Use BFF endpoints (`apps/server/src/bff/`) for stitching multi-module data on dashboards, or dedicated read-models / CQRS views for high-throughput queries.
 
 ### 3. Vertical Slice & Clean Code Standards

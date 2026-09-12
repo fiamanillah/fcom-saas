@@ -30,7 +30,7 @@ We organize `apps/server` as a **Modular Monolith with Vertical Slice Architectu
 ### Negative / Trade-offs
 - No cross-module SQL joins allowed; queries spanning domains must use BFF endpoints or read-models/CQRS.
 - Outbox worker process and polling/queue infrastructure required.
-- Requires strict adherence and automated boundary enforcement (ESLint/Biome/dependency-cruiser) to prevent accidental direct imports of internal module paths.
+- Requires strict adherence and automated boundary enforcement (Biome and `check-module-boundaries`) to prevent accidental direct imports of internal module paths.
 
 ## References
 - See [Engineering Guide](../engineering-guide.md)

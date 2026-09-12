@@ -287,7 +287,5 @@ export function getPublicUrl(key: string, customDomain?: string): string {
   if (customDomain) {
     return `https://${customDomain}/${key}`;
   }
-  // R2 public buckets use the format: https://pub-<hash>.r2.dev/<key>
-  // This requires setting up public access in Cloudflare dashboard
   return `https://${BUCKET_NAME}.${process.env.R2_ACCOUNT_ID}.r2.dev/${key}`;
 }

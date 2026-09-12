@@ -1,4 +1,5 @@
 import { type ConnectionOptions, Queue } from "bullmq";
+import Redis from "ioredis";
 
 export const connection: ConnectionOptions = {
   host: process.env.REDIS_HOST || "localhost",
@@ -7,14 +8,38 @@ export const connection: ConnectionOptions = {
   maxRetriesPerRequest: null,
 };
 
+// ponytail: shared lazy Redis client for $O(1)$ idempotency locks; avoids extra connections
+export const redis = new Redis({
+  host: connection.host,
+  port: connection.port,
+  password: connection.password,
+  lazyConnect: true,
+  maxRetriesPerRequest: null,
+  enableOfflineQueue: false,
+});
+
+redis.on("error", () => {});
+
 /**
  * Example queue for background job processing
  * @see https://docs.bullmq.io/
  */
 export const emailQueue = new Queue("email", { connection });
 export const notificationQueue = new Queue("notification", { connection });
+export const domainEventsQueue = new Queue("domain-events", { connection });
+
+// Prevent unhandled rejection noise when Redis is not running (e.g. during tests)
+emailQueue.on("error", () => {});
+notificationQueue.on("error", () => {});
+domainEventsQueue.on("error", () => {});
 
 // Define job data types
+export interface DomainEventJobData {
+  id: string;
+  eventType: string;
+  payload: unknown;
+}
+
 export interface EmailJobData {
   to: string;
   subject: string;
@@ -97,4 +122,5 @@ export async function getQueueStats(queue: Queue) {
 export async function closeQueues() {
   await emailQueue.close();
   await notificationQueue.close();
+  await domainEventsQueue.close();
 }

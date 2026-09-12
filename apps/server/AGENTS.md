@@ -22,9 +22,8 @@ Every domain capability must be located at `apps/server/src/modules/<domain>/`:
 apps/server/src/modules/<domain>/
 ├── <domain>.manifest.ts        # Declarative contract: entitlements, permissions, operations
 ├── index.ts                    # ONLY file other modules may import from (Public API)
-├── schema.ts                   # Drizzle tables owned exclusively by this module
+├── schema.ts                   # Module schema re-exports from @syncdocket/db (packages/db/src/schema/<domain>/)
 ├── routes.ts                   # Hono route definitions & middleware wiring ONLY
-├── migrations/                 # This module's DB migrations ONLY
 ├── events/                     # Domain event listeners & subscribers
 │   ├── index.ts
 │   └── <event-name>.listener.ts
@@ -78,9 +77,11 @@ Every route in `routes.ts` must pass through two gates:
 - External modules may **ONLY** import from `apps/server/src/modules/<domain>/index.ts`.
 - ❌ **NEVER** import from another module's `internal/`, `features/`, `schema.ts`, or `routes.ts`.
 
-### Rule 6: Schema & Migration Isolation
-- Each module's migrations reside in its own `migrations/` folder.
-- A migration or handler must never execute raw SQL against tables owned by another domain.
+### Rule 6: Centralized Schemas & Single-Place Migrations (Option A)
+- Drizzle schemas reside in `packages/db/src/schema/<domain>/` and are re-exported by the domain module's local `schema.ts`.
+- `drizzle-kit` runs migrations reliably in a single place (`packages/db/src/migrations/`).
+- Cross-module joins remain strictly forbidden; store reference IDs and resolve through events or public contracts.
+- A handler or service must never execute raw SQL against tables owned by another domain.
 
 ---
 

@@ -61,7 +61,25 @@
         "noUnusedTemplateLiteral": "error",
         "useNumberNamespace": "error",
         "noInferrableTypes": "error",
-        "noUselessElse": "error"
+        "noUselessElse": "error",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": [
+                  "@/modules/*/internal/*",
+                  "@/modules/*/internal/**",
+                  "@/modules/*/internal",
+                  "@/modules/*/features/*",
+                  "@/modules/*/features/**",
+                  "@/modules/*/features"
+                ],
+                "message": "Import only from the module root index.ts."
+              }
+            ]
+          }
+        }
       }
     }
   },
