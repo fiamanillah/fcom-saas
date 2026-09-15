@@ -5,6 +5,7 @@ import { type TokenPayload, verifyAccessToken } from "./internal/security";
 import { users } from "./schema";
 
 export { authManifest } from "./auth.manifest";
+export * from "./events";
 export type { RegisterDTO, RegisterResult, SafeUser } from "./features/register/register.dto";
 export type { TokenPayload } from "./internal/security";
 export { authRoutes } from "./routes";

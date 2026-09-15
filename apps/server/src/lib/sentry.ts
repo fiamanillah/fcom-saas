@@ -1,41 +1,24 @@
 import * as Sentry from "@sentry/node";
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
 // Sentry configuration from environment variables
 const dsn = process.env.SENTRY_DSN;
 const environment = process.env.SENTRY_ENVIRONMENT || "development";
 const tracesSampleRate = Number.parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || "1.0");
-const profilesSampleRate = Number.parseFloat(process.env.SENTRY_PROFILES_SAMPLE_RATE || "0.1");
 
 /**
  * Initialize Sentry for error tracking and performance monitoring
  * Call this at the very beginning of your application, before any other imports
- *
- * @example
- * // At the top of your main entry file (e.g., index.ts)
- * import { initSentry } from './lib/sentry';
- * initSentry();
- *
- * // Then import and start your application
- * import { app } from './app';
  */
 export function initSentry(): void {
-  if (!dsn) {
-    console.warn("[Sentry] DSN not configured, skipping initialization");
+  if (!dsn || process.env.NODE_ENV === "test") {
     return;
   }
 
   Sentry.init({
     dsn,
     environment,
-    integrations: [
-      // Add profiling integration for performance insights
-      nodeProfilingIntegration(),
-    ],
     // Performance Monitoring
     tracesSampleRate,
-    // Set sampling rate for profiling - this is relative to tracesSampleRate
-    profilesSampleRate,
   });
 
   console.log(`[Sentry] Initialized for ${environment}`);

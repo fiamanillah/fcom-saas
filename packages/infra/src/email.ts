@@ -31,6 +31,11 @@ export interface SendEmailOptions {
 export async function sendEmail(options: SendEmailOptions) {
   const { to, subject, body, name, headers, subscribed } = options;
 
+  if (!process.env.PLUNK_API_KEY) {
+    console.warn(`[Plunk] PLUNK_API_KEY not set, skipping email dispatch to: ${to}`);
+    return { success: true, mocked: true };
+  }
+
   try {
     const success = await plunk.emails.send({
       to,
@@ -66,6 +71,11 @@ export interface TrackEventOptions {
  */
 export async function trackEvent(options: TrackEventOptions) {
   const { event, email, data } = options;
+
+  if (!process.env.PLUNK_API_KEY) {
+    console.warn(`[Plunk] PLUNK_API_KEY not set, skipping tracking event "${event}" for: ${email}`);
+    return { success: true, mocked: true };
+  }
 
   try {
     const success = await plunk.events.track({

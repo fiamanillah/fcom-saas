@@ -1,6 +1,39 @@
 import { type Job, Worker } from "bullmq";
+import { onUserRegistered } from "../modules/auth";
 import { outboxWorker, pollAndProcessOutbox, startOutboxWorker, stopOutboxWorker } from "./outbox";
-import { connection, type EmailJobData, type NotificationJobData } from "./queue.js";
+import {
+  connection,
+  type DomainEventJobData,
+  type EmailJobData,
+  type NotificationJobData,
+} from "./queue";
+
+/**
+ * Domain events worker - processes domain events dispatched from outbox
+ */
+export const domainEventsWorker = new Worker<DomainEventJobData>(
+  "domain-events",
+  async (job: Job<DomainEventJobData>) => {
+    const { id, eventType, payload } = job.data;
+
+    switch (eventType) {
+      case "auth.user.registered":
+        await onUserRegistered({
+          id,
+          eventType: "auth.user.registered",
+          payload: payload as { userId: string; email: string; name?: string | null },
+        });
+        break;
+      default:
+        console.warn(`Unhandled domain event type: ${eventType} (job ID: ${job.id})`);
+        break;
+    }
+  },
+  {
+    connection,
+    concurrency: 10,
+  },
+);
 
 /**
  * Email worker - processes email sending jobs
@@ -54,6 +87,14 @@ export const notificationWorker = new Worker<NotificationJobData>(
 );
 
 // Event handlers for monitoring
+domainEventsWorker.on("completed", (job) => {
+  console.log(`Domain event job ${job.id} (${job.name}) has completed`);
+});
+
+domainEventsWorker.on("failed", (job, err) => {
+  console.error(`Domain event job ${job?.id} (${job?.name}) failed: ${err.message}`);
+});
+
 emailWorker.on("completed", (job) => {
   console.log(`Email job ${job.id} has completed`);
 });
@@ -78,6 +119,7 @@ export { outboxWorker, pollAndProcessOutbox, startOutboxWorker, stopOutboxWorker
  */
 export async function closeWorkers() {
   stopOutboxWorker();
+  await domainEventsWorker.close();
   await emailWorker.close();
   await notificationWorker.close();
 }
@@ -91,6 +133,7 @@ export function startWorkers() {
   startOutboxWorker();
   console.log("Workers started");
   console.log("- Outbox worker: polling 'outbox_events' (FOR UPDATE SKIP LOCKED)");
+  console.log("- Domain events worker: processing 'domain-events' queue");
   console.log("- Email worker: processing 'email' queue");
   console.log("- Notification worker: processing 'notification' queue");
 }
