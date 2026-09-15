@@ -46,13 +46,13 @@ export function LoginForm() {
   });
 
   return (
-    <Card className="relative w-full max-w-[390px] rounded-2xl border border-zinc-800/80 bg-[#121319]/90 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-      <CardHeader className="mb-3 space-y-0.5 p-0">
+    <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+      <CardHeader className="mb-3 space-y-1 p-0">
         <CardTitle className="font-semibold text-lg text-white tracking-tight sm:text-xl">
-          Welcome back
+          Sign in to SyncDocket
         </CardTitle>
         <CardDescription className="text-xs text-zinc-400">
-          Enter your credentials to access your account.
+          Enter your credentials to access your omnichannel workspace.
         </CardDescription>
       </CardHeader>
 
@@ -103,7 +103,7 @@ export function LoginForm() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
-                      className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 px-3 text-xs text-zinc-100 placeholder:text-zinc-600 focus-visible:border-zinc-500 focus-visible:ring-1 focus-visible:ring-zinc-500"
+                      className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 px-3 text-xs text-zinc-100 placeholder:text-zinc-600 focus-visible:border-emerald-500 focus-visible:ring-1 focus-visible:ring-emerald-500/30"
                     />
                     {isInvalid && (
                       <FieldError className="text-[11px] text-rose-400">
@@ -138,12 +138,12 @@ export function LoginForm() {
                       </FieldLabel>
                       <Link
                         href="/auth/forgot-password"
-                        className="text-[11px] text-zinc-400 transition-colors hover:text-zinc-200"
+                        className="text-[11px] text-zinc-400 transition-colors hover:text-emerald-400"
                       >
                         Forgot password?
                       </Link>
                     </div>
-                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500">
+                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30">
                       <InputGroupInput
                         id="login-password"
                         name={field.name}
@@ -189,11 +189,11 @@ export function LoginForm() {
                 id="remember-me"
                 checked={rememberMe}
                 onCheckedChange={(checked) => setRememberMe(Boolean(checked))}
-                className="size-3.5 rounded border-zinc-700 bg-zinc-900 data-[state=checked]:bg-zinc-100 data-[state=checked]:text-zinc-950"
+                className="size-3.5 rounded border-zinc-700 bg-zinc-900 data-[state=checked]:bg-emerald-500 data-[state=checked]:text-zinc-950"
               />
               <label
                 htmlFor="remember-me"
-                className="cursor-pointer select-none text-[11px] text-zinc-400"
+                className="cursor-pointer select-none text-[11px] text-zinc-400 hover:text-zinc-300"
               >
                 Remember me for 30 days
               </label>
@@ -205,7 +205,7 @@ export function LoginForm() {
               <Button
                 type="submit"
                 disabled={!canSubmit || isSubmitting}
-                className="mt-1.5 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-zinc-100 font-medium text-xs text-zinc-950 shadow-sm transition-colors hover:bg-white disabled:opacity-60"
+                className="mt-1.5 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
@@ -214,7 +214,7 @@ export function LoginForm() {
                   </>
                 ) : (
                   <>
-                    <span>Sign in</span>
+                    <span>Sign in to Workspace</span>
                     <ArrowRight className="size-3.5" />
                   </>
                 )}
@@ -227,9 +227,9 @@ export function LoginForm() {
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/signup"
-            className="font-medium text-white underline underline-offset-4 transition-colors hover:text-zinc-200"
+            className="font-medium text-emerald-400 underline underline-offset-4 transition-colors hover:text-emerald-300"
           >
-            Sign up
+            Start free trial
           </Link>
         </p>
       </CardContent>

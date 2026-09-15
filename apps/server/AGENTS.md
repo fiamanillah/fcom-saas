@@ -5,6 +5,32 @@
 
 ---
 
+## 0. SyncDocket SaaS Product Overview
+
+**SyncDocket** is a B2B SaaS platform engineered to unify fragmented customer communications, CRM records, and order/courier dispatch into a single operational workspace.
+
+### The Problem Solved: Operational Fragmentation
+1. **Scattered Inboxes:** Conversations split across WhatsApp, FB Messenger, Instagram Direct, web chat, and email, forcing support staff to toggle browser tabs and miss critical inquiries.
+2. **Decoupled Data Silos:** Support reps lack immediate visibility into order history, payment status, or past tickets without switching to external admin panels.
+3. **Friction in Dispatch & Fulfillment:** Creating delivery dockets or booking couriers from customer conversations requires redundant copy-pasting across courier portals.
+4. **Permission Chaos:** Difficulty isolating sensitive financial data, full order management, or API secrets when granting chat access to junior support agents.
+
+### Core Product Capabilities
+1. **Unified Omnichannel Inbox:** Aggregates real-time messages (WhatsApp, Messenger, IG, Web Chat), team collaboration, thread assignment, collision detection, and automated quick-replies.
+2. **Contextual CRM & Customer 360:** Embeds customer profiles, order history, contact tags, and interaction notes directly beside active chat threads.
+3. **Integrated Order & Courier Dispatch:** In-chat order creation/modification, parcel booking, structured delivery docket generation, tracking status updates, and automated notifications back into the chat.
+
+---
+
+## UI & UX Principles: Customer Perspective First & Radical Minimalism
+
+1. **Customer Perspective First:** Build fast, intuitive flows that eliminate repetitive actions for support teams and merchants.
+2. **Radical Minimalism:** Strictly avoid visual clutter, arbitrary badges, decorative boxes, and marketing filler in operational views.
+3. **Strict Viewport Discipline:** Core operational screens and auth views must stay locked to the viewport without unnecessary scrollbars (`h-dvh h-screen max-h-screen overflow-hidden`).
+4. **Ponytail Rule (Simplicity & YAGNI):** Implement the simplest, cleanest solution with zero speculative complexity.
+
+---
+
 ## 1. Core Architecture: Modular Monolith + Vertical Slices
 
 Code in `apps/server` is organized around **business capabilities (modules)**, not technical layers.
@@ -135,4 +161,3 @@ Before completing any task in `apps/server`, verify:
 - [ ] No cross-module joins or illegal imports from other module internals.
 - [ ] Colocated test exists and verifies the happy path + transactional outbox generation.
 - [ ] Code passes formatting and linting: `bun run check`.
-

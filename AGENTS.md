@@ -1,10 +1,53 @@
 # SyncDocket
 
-This file provides context about the project for AI assistants.
+This file provides comprehensive context about the project, business domain, and architecture for AI assistants and engineers.
 
-## Project Overview
+## Product Overview: What is SyncDocket?
 
-- **Ecosystem**: Typescript
+**SyncDocket** is a B2B SaaS platform engineered to unify fragmented customer communications, CRM records, and order/courier dispatch into a single operational workspace.
+
+### The Problem Solved: Operational Fragmentation
+
+Modern businesses—particularly e-commerce brands and high-touch merchants—face severe operational fragmentation:
+
+1. **Scattered Inboxes:** Customer conversations are split across isolated channels (WhatsApp, Facebook Messenger, Instagram Direct, live web chat, and email), forcing support staff to toggle multiple browser tabs and miss critical inquiries.
+2. **Decoupled Data Silos:** Customer support agents answering chat inquiries have no direct visibility into order history, payment statuses, or past tickets without manually searching an external CRM or e-commerce admin panel.
+3. **Friction in Dispatch & Fulfillment:** When an order is confirmed or modified inside a customer conversation, generating a delivery docket or booking a courier requires redundant copy-pasting across separate courier portals.
+4. **Permission Chaos:** Businesses struggle to give junior support reps access to reply to customer chats without accidentally exposing store-wide financials, API secrets, or full order management capabilities.
+
+SyncDocket eliminates this friction by bringing real-time communication, customer relationship data, and fulfillment logistics onto a single screen.
+
+### Core Product Capabilities
+
+1. **Unified Omnichannel Inbox**
+   - Aggregates real-time inbound messages from WhatsApp, Facebook Messenger, Instagram, and web chat into a single stream.
+   - Enables thread assignment, team collaboration, collision detection, and automated quick-replies.
+
+2. **Contextual CRM & Customer 360**
+   - Embeds customer profiles, order history, contact tags, and past interaction notes directly alongside the active conversation thread.
+   - Allows support teams to update contact details and view purchase records in real time.
+
+3. **Integrated Order & Courier Dispatch**
+   - Allows agents to create manual orders, edit pending orders, and book courier parcels directly from within the chat window.
+   - Generates structured delivery dockets, tracks shipment statuses, and pushes automated delivery notifications back into the customer's chat thread.
+
+---
+
+## UI & UX Principles: Customer Perspective First & Radical Minimalism
+
+All AI assistants and engineers MUST adhere to these design and user experience standards:
+
+1. **Customer Perspective First:**
+   - Every interface must be designed for maximum operational speed and zero friction. Support reps and merchants handle dozens of interactions simultaneously; every unnecessary click, slow load, or confusing layout costs them real business.
+2. **Radical Minimalism & Clean UI:**
+   - Keep screens uncluttered and distraction-free. Strictly avoid useless decorative badges, animated gimmick pills, marketing filler, or redundant info cards on operational and auth screens.
+   - Use subtle, focused ambient glow effects (`bg-primary` / emerald palette) and clean card borders rather than noisy decorations.
+3. **Strict Viewport Discipline (Zero Accidental Scrollbars):**
+   - Operational workspaces and authentication screens (login, signup, password reset, OTP) must fit within the active viewport (`h-dvh h-screen max-h-screen overflow-hidden`) without awkward page-level vertical scrollbars.
+4. **Ponytail Rule (Simplicity & YAGNI):**
+   - Build the simplest, shortest, most minimal solution that solves the user's problem. Never over-engineer UI or code.
+
+---
 
 ## Tech Stack
 
@@ -14,7 +57,7 @@ This file provides context about the project for AI assistants.
 ### Frontend
 
 - Framework: next
-- CSS: tailwind
+- CSS: tailwind (Emerald primary palette)
 - UI Library: shadcn-ui
 - State: zustand
 
@@ -37,20 +80,24 @@ This file provides context about the project for AI assistants.
 - Logging: pino
 - Observability: sentry
 
+---
+
 ## Project Structure
 
 ```
 syncdocket/
 ├── apps/
-│   ├── app/         # Frontend application
+│   ├── app/         # Frontend application (Next.js, Tailwind, shadcn-ui)
 │   └── server/      # Backend API (Modular Monolith with Vertical Slices)
 ├── docs/            # Engineering guides & Architecture Decision Records (ADRs)
 ├── packages/
-│   ├── config/      # Shared config
-│   ├── db/          # Database schema
-│   ├── env/         # Environment variables
-│   └── ui/          # Shared UI components
+│   ├── config/      # Shared config (Tailwind, Biome, TypeScript)
+│   ├── db/          # Centralized Database schema & Drizzle migrations
+│   ├── env/         # Environment variables & runtime validation
+│   └── ui/          # Shared UI component library
 ```
+
+---
 
 ## Common Commands
 
@@ -60,6 +107,8 @@ syncdocket/
 - `bun test` - Run tests
 - `bun db:push` - Push database schema
 - `bun db:studio` - Open database UI
+
+---
 
 ## Backend Architecture Standards: Modular Monolith & Vertical Slices
 
@@ -91,6 +140,8 @@ Modules live under `apps/server/src/modules/<domain>/`:
 - **HTTP Agnostic:** Internal services and handlers take/return plain TypeScript data, never `Request`/`Response` objects.
 - **Business-First Naming:** Name folders and functions after real business actions (`dispatch-courier`), not technical layers.
 - **ADRs:** Document non-trivial architectural decisions in `docs/adr/NNN-title.md` (see [`docs/adr/000-template.md`](docs/adr/000-template.md) and [`docs/adr/001-modular-monolith-and-vertical-slices.md`](docs/adr/001-modular-monolith-and-vertical-slices.md)).
+
+---
 
 ## Better Fullstack project context
 

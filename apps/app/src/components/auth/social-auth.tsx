@@ -40,7 +40,7 @@ export function SocialAuthButtons({ showDivider = true }: { showDivider?: boolea
         type="button"
         variant="outline"
         onClick={handleGoogleLogin}
-        className="flex h-9 w-full items-center justify-center gap-2 rounded-lg border-zinc-800 bg-zinc-900/50 font-medium text-xs text-zinc-200 transition-colors hover:bg-zinc-800/70 hover:text-white"
+        className="flex h-9 w-full items-center justify-center gap-2 rounded-lg border-zinc-800 bg-zinc-900/50 font-medium text-xs text-zinc-200 transition-colors hover:border-zinc-700 hover:bg-zinc-800/80 hover:text-white"
       >
         <GoogleIcon />
         <span>Continue with Google</span>
@@ -51,7 +51,7 @@ export function SocialAuthButtons({ showDivider = true }: { showDivider?: boolea
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-zinc-800/80 border-t" />
           </div>
-          <div className="relative bg-[#121319] px-2.5">
+          <div className="relative bg-zinc-950 px-2.5">
             <span className="font-medium text-[10px] text-zinc-500 uppercase tracking-widest">
               OR
             </span>

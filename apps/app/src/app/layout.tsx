@@ -21,6 +21,14 @@ export const metadata: Metadata = {
     template: "%s | SyncDocket",
   },
   description: "SyncDocket - Docket and workflow management for modern teams",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

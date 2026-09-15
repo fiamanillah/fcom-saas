@@ -44,13 +44,13 @@ export function SignUpForm() {
   });
 
   return (
-    <Card className="relative w-full max-w-[390px] rounded-2xl border border-zinc-800/80 bg-[#121319]/90 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-      <CardHeader className="mb-3 space-y-0.5 p-0">
+    <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+      <CardHeader className="mb-3 space-y-1 p-0">
         <CardTitle className="font-semibold text-lg text-white tracking-tight sm:text-xl">
           Start your 14-day trial
         </CardTitle>
         <CardDescription className="text-xs text-zinc-400">
-          No credit card. No sales call. Just ship.
+          Unify chats, CRM, and courier logistics. No credit card required.
         </CardDescription>
       </CardHeader>
 
@@ -101,7 +101,7 @@ export function SignUpForm() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
-                      className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 px-3 text-xs text-zinc-100 placeholder:text-zinc-600 focus-visible:border-zinc-500 focus-visible:ring-1 focus-visible:ring-zinc-500"
+                      className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 px-3 text-xs text-zinc-100 placeholder:text-zinc-600 focus-visible:border-emerald-500 focus-visible:ring-1 focus-visible:ring-emerald-500/30"
                     />
                     {isInvalid && (
                       <FieldError className="text-[11px] text-rose-400">
@@ -134,7 +134,7 @@ export function SignUpForm() {
                     >
                       Password
                     </FieldLabel>
-                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500">
+                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30">
                       <InputGroupInput
                         id="signup-password"
                         name={field.name}
@@ -180,16 +180,16 @@ export function SignUpForm() {
               <Button
                 type="submit"
                 disabled={!canSubmit || isSubmitting}
-                className="mt-1.5 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-zinc-100 font-medium text-xs text-zinc-950 shadow-sm transition-colors hover:bg-white disabled:opacity-60"
+                className="mt-1.5 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="size-3.5 animate-spin" />
-                    <span>Starting trial...</span>
+                    <span>Creating workspace...</span>
                   </>
                 ) : (
                   <>
-                    <span>Start free trial</span>
+                    <span>Start 14-Day Free Trial</span>
                     <ArrowRight className="size-3.5" />
                   </>
                 )}
@@ -202,7 +202,7 @@ export function SignUpForm() {
           Already have an account?{" "}
           <Link
             href="/auth/login"
-            className="font-medium text-white underline underline-offset-4 transition-colors hover:text-zinc-200"
+            className="font-medium text-emerald-400 underline underline-offset-4 transition-colors hover:text-emerald-300"
           >
             Log in
           </Link>

@@ -51,9 +51,9 @@ export function ResetPasswordForm() {
   });
 
   return (
-    <Card className="relative w-full max-w-[390px] rounded-2xl border border-zinc-800/80 bg-[#121319]/90 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-      <CardHeader className="mb-3 space-y-0.5 p-0">
-        <div className="mb-2 flex size-8 items-center justify-center rounded-lg bg-zinc-800/60 text-zinc-300">
+    <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+      <CardHeader className="mb-3 space-y-1 p-0">
+        <div className="mb-1 flex size-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20">
           <KeyRound className="size-4" />
         </div>
         <CardTitle className="font-semibold text-lg text-white tracking-tight sm:text-xl">
@@ -96,7 +96,7 @@ export function ResetPasswordForm() {
                     >
                       New password
                     </FieldLabel>
-                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500">
+                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30">
                       <InputGroupInput
                         id="new-password"
                         name={field.name}
@@ -159,7 +159,7 @@ export function ResetPasswordForm() {
                     >
                       Confirm password
                     </FieldLabel>
-                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500">
+                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30">
                       <InputGroupInput
                         id="confirm-password"
                         name={field.name}
@@ -205,7 +205,7 @@ export function ResetPasswordForm() {
               <Button
                 type="submit"
                 disabled={!canSubmit || isSubmitting}
-                className="mt-1 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-zinc-100 font-medium text-xs text-zinc-950 shadow-sm transition-colors hover:bg-white disabled:opacity-60"
+                className="mt-1 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
@@ -226,7 +226,7 @@ export function ResetPasswordForm() {
         <div className="pt-2 text-center">
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-zinc-200"
+            className="inline-flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-emerald-400"
           >
             <ArrowLeft className="size-3.5" />
             <span>Back to log in</span>
