@@ -7,7 +7,7 @@
     "check-types": "tsc -b",
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
     "db:migrate": "turbo -F @syncdocket/db db:migrate",
-    "test": "vitest run --passWithNoTests",
+    "test": "bun --bun vitest run --passWithNoTests",
     "check:boundaries": "bun run ../../scripts/check-module-boundaries.ts",
     "lint:imports": "bun run ../../scripts/check-module-boundaries.ts",
     "dev": "bun run --hot src/index.ts",

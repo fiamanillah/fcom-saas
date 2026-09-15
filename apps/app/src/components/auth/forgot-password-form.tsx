@@ -41,16 +41,16 @@ export function ForgotPasswordForm() {
 
   if (isSubmitted) {
     return (
-      <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 text-center shadow-2xl backdrop-blur-xl sm:p-6">
-        <div className="mx-auto mb-3 flex size-10 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20">
+      <Card className="relative w-full max-w-[400px] rounded-2xl border border-border bg-card/90 p-5 text-center shadow-xl backdrop-blur-xl sm:p-6">
+        <div className="mx-auto mb-3 flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">
           <CheckCircle2 className="size-5" />
         </div>
-        <CardTitle className="mb-1 font-semibold text-lg text-white tracking-tight sm:text-xl">
+        <CardTitle className="mb-1 font-semibold text-card-foreground text-lg tracking-tight sm:text-xl">
           Check your inbox
         </CardTitle>
-        <CardDescription className="mb-4 text-xs text-zinc-400 leading-relaxed">
+        <CardDescription className="mb-4 text-muted-foreground text-xs leading-relaxed">
           We&apos;ve sent a password recovery link to{" "}
-          <span className="font-medium text-emerald-300">{submittedEmail}</span>.
+          <span className="font-medium text-foreground">{submittedEmail}</span>.
         </CardDescription>
 
         <div className="space-y-2">
@@ -59,7 +59,7 @@ export function ForgotPasswordForm() {
             onClick={() =>
               router.push(`/auth/reset-password?email=${encodeURIComponent(submittedEmail)}`)
             }
-            className="flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400"
+            className="flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-primary font-medium text-primary-foreground text-xs shadow-sm transition-colors hover:bg-primary/90"
           >
             <span>Proceed to set new password</span>
             <ArrowRight className="size-3.5" />
@@ -69,16 +69,16 @@ export function ForgotPasswordForm() {
             type="button"
             variant="ghost"
             onClick={() => setIsSubmitted(false)}
-            className="flex h-8 w-full items-center justify-center text-xs text-zinc-400 hover:text-zinc-200"
+            className="flex h-8 w-full items-center justify-center text-muted-foreground text-xs hover:text-foreground"
           >
             Try a different email
           </Button>
         </div>
 
-        <div className="mt-4 border-zinc-800/80 border-t pt-3">
+        <div className="mt-4 border-border border-t pt-3">
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-emerald-400"
+            className="inline-flex items-center gap-1.5 text-muted-foreground text-xs transition-colors hover:text-primary"
           >
             <ArrowLeft className="size-3.5" />
             <span>Back to log in</span>
@@ -89,15 +89,15 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+    <Card className="relative w-full max-w-[400px] rounded-2xl border border-border bg-card/90 p-5 shadow-xl backdrop-blur-xl sm:p-6">
       <CardHeader className="mb-3 space-y-1 p-0">
-        <div className="mb-1 flex size-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20">
+        <div className="mb-1 flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20">
           <Mail className="size-4" />
         </div>
-        <CardTitle className="font-semibold text-lg text-white tracking-tight sm:text-xl">
+        <CardTitle className="font-semibold text-card-foreground text-lg tracking-tight sm:text-xl">
           Reset your password
         </CardTitle>
-        <CardDescription className="text-xs text-zinc-400 leading-relaxed">
+        <CardDescription className="text-muted-foreground text-xs leading-relaxed">
           Enter your registered work email and we&apos;ll send you a password reset link.
         </CardDescription>
       </CardHeader>
@@ -131,7 +131,7 @@ export function ForgotPasswordForm() {
                   <Field data-invalid={isInvalid} className="gap-1">
                     <FieldLabel
                       htmlFor="reset-email"
-                      className="font-medium text-[11px] text-zinc-300"
+                      className="font-medium text-[11px] text-foreground"
                     >
                       Work email
                     </FieldLabel>
@@ -146,10 +146,10 @@ export function ForgotPasswordForm() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
-                      className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 px-3 text-xs text-zinc-100 placeholder:text-zinc-600 focus-visible:border-emerald-500 focus-visible:ring-1 focus-visible:ring-emerald-500/30"
+                      className="h-8.5 rounded-lg border-input bg-background/70 px-3 text-foreground text-xs placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary/30"
                     />
                     {isInvalid && (
-                      <FieldError className="text-[11px] text-rose-400">
+                      <FieldError className="text-[11px] text-destructive">
                         {field.state.meta.errors[0]}
                       </FieldError>
                     )}
@@ -164,7 +164,7 @@ export function ForgotPasswordForm() {
               <Button
                 type="submit"
                 disabled={!canSubmit || isSubmitting}
-                className="mt-1 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400 disabled:opacity-60"
+                className="mt-1 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-primary font-medium text-primary-foreground text-xs shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
@@ -185,7 +185,7 @@ export function ForgotPasswordForm() {
         <div className="pt-2 text-center">
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-emerald-400"
+            className="inline-flex items-center gap-1.5 text-muted-foreground text-xs transition-colors hover:text-primary"
           >
             <ArrowLeft className="size-3.5" />
             <span>Back to log in</span>

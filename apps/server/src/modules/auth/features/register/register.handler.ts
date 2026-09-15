@@ -46,7 +46,6 @@ export async function registerHandler(dto: RegisterDTO): Promise<RegisterResult>
         email: newUser.email,
         name: newUser.name,
       },
-      status: "pending",
     });
 
     return newUser;

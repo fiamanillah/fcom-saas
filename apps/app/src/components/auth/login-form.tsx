@@ -46,12 +46,12 @@ export function LoginForm() {
   });
 
   return (
-    <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+    <Card className="relative w-full max-w-[400px] rounded-2xl border border-border bg-card/90 p-5 shadow-xl backdrop-blur-xl sm:p-6">
       <CardHeader className="mb-3 space-y-1 p-0">
-        <CardTitle className="font-semibold text-lg text-white tracking-tight sm:text-xl">
+        <CardTitle className="font-semibold text-card-foreground text-lg tracking-tight sm:text-xl">
           Sign in to SyncDocket
         </CardTitle>
-        <CardDescription className="text-xs text-zinc-400">
+        <CardDescription className="text-muted-foreground text-xs">
           Enter your credentials to access your omnichannel workspace.
         </CardDescription>
       </CardHeader>
@@ -88,7 +88,7 @@ export function LoginForm() {
                   <Field data-invalid={isInvalid} className="gap-1">
                     <FieldLabel
                       htmlFor="login-email"
-                      className="font-medium text-[11px] text-zinc-300"
+                      className="font-medium text-[11px] text-foreground"
                     >
                       Work email
                     </FieldLabel>
@@ -103,10 +103,10 @@ export function LoginForm() {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
-                      className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 px-3 text-xs text-zinc-100 placeholder:text-zinc-600 focus-visible:border-emerald-500 focus-visible:ring-1 focus-visible:ring-emerald-500/30"
+                      className="h-8.5 rounded-lg border-input bg-background/70 px-3 text-foreground text-xs placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary/30"
                     />
                     {isInvalid && (
-                      <FieldError className="text-[11px] text-rose-400">
+                      <FieldError className="text-[11px] text-destructive">
                         {field.state.meta.errors[0]}
                       </FieldError>
                     )}
@@ -132,18 +132,18 @@ export function LoginForm() {
                     <div className="flex items-center justify-between">
                       <FieldLabel
                         htmlFor="login-password"
-                        className="font-medium text-[11px] text-zinc-300"
+                        className="font-medium text-[11px] text-foreground"
                       >
                         Password
                       </FieldLabel>
                       <Link
                         href="/auth/forgot-password"
-                        className="text-[11px] text-zinc-400 transition-colors hover:text-emerald-400"
+                        className="text-[11px] text-muted-foreground transition-colors hover:text-primary"
                       >
                         Forgot password?
                       </Link>
                     </div>
-                    <InputGroup className="h-8.5 rounded-lg border-zinc-800 bg-zinc-900/60 focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500/30">
+                    <InputGroup className="h-8.5 rounded-lg border-input bg-background/70 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/30">
                       <InputGroupInput
                         id="login-password"
                         name={field.name}
@@ -154,7 +154,7 @@ export function LoginForm() {
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         aria-invalid={isInvalid}
-                        className="px-3 text-xs text-zinc-100 placeholder:text-zinc-600"
+                        className="px-3 text-foreground text-xs placeholder:text-muted-foreground"
                       />
                       <InputGroupAddon align="inline-end" className="pr-1.5">
                         <InputGroupButton
@@ -163,7 +163,7 @@ export function LoginForm() {
                           size="icon-xs"
                           aria-label={showPassword ? "Hide password" : "Show password"}
                           onClick={() => setShowPassword(!showPassword)}
-                          className="text-zinc-400 hover:text-zinc-200"
+                          className="text-muted-foreground hover:text-foreground"
                         >
                           {showPassword ? (
                             <EyeOff className="size-3.5" />
@@ -174,7 +174,7 @@ export function LoginForm() {
                       </InputGroupAddon>
                     </InputGroup>
                     {isInvalid && (
-                      <FieldError className="text-[11px] text-rose-400">
+                      <FieldError className="text-[11px] text-destructive">
                         {field.state.meta.errors[0]}
                       </FieldError>
                     )}
@@ -189,11 +189,11 @@ export function LoginForm() {
                 id="remember-me"
                 checked={rememberMe}
                 onCheckedChange={(checked) => setRememberMe(Boolean(checked))}
-                className="size-3.5 rounded border-zinc-700 bg-zinc-900 data-[state=checked]:bg-emerald-500 data-[state=checked]:text-zinc-950"
+                className="size-3.5 rounded border-input bg-background data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
               />
               <label
                 htmlFor="remember-me"
-                className="cursor-pointer select-none text-[11px] text-zinc-400 hover:text-zinc-300"
+                className="cursor-pointer select-none text-[11px] text-muted-foreground hover:text-foreground"
               >
                 Remember me for 30 days
               </label>
@@ -205,7 +205,7 @@ export function LoginForm() {
               <Button
                 type="submit"
                 disabled={!canSubmit || isSubmitting}
-                className="mt-1.5 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400 disabled:opacity-60"
+                className="mt-1.5 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-primary font-medium text-primary-foreground text-xs shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
@@ -223,11 +223,11 @@ export function LoginForm() {
           </form.Subscribe>
         </form>
 
-        <p className="text-center text-xs text-zinc-400">
+        <p className="text-center text-muted-foreground text-xs">
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/signup"
-            className="font-medium text-emerald-400 underline underline-offset-4 transition-colors hover:text-emerald-300"
+            className="font-medium text-primary underline underline-offset-4 transition-colors hover:opacity-80"
           >
             Start free trial
           </Link>

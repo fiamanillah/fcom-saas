@@ -1,13 +1,4 @@
 import { describe, expect, it, vi } from "vitest";
-import app from "@/index";
-import {
-  hashPassword,
-  signAccessToken,
-  verifyAccessToken,
-  verifyPassword,
-} from "../../internal/security";
-import { registerSchema } from "./register.dto";
-import { registerHandler } from "./register.handler";
 
 // Mock @syncdocket/db for unit & integration testing without external Postgres requirement
 vi.mock("@syncdocket/db", async () => {
@@ -76,6 +67,16 @@ vi.mock("@syncdocket/db", async () => {
     authOutboxEvents: outboxEvents,
   };
 });
+
+import app from "@/index";
+import {
+  hashPassword,
+  signAccessToken,
+  verifyAccessToken,
+  verifyPassword,
+} from "../../internal/security";
+import { registerSchema } from "./register.dto";
+import { registerHandler } from "./register.handler";
 
 describe("Auth Module: Register Feature", () => {
   describe("DTO validation (registerSchema)", () => {

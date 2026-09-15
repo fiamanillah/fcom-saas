@@ -65,16 +65,16 @@ export function OtpForm() {
   };
 
   return (
-    <Card className="relative w-full max-w-[400px] rounded-2xl border border-zinc-800/80 bg-zinc-950/80 p-5 text-center shadow-2xl backdrop-blur-xl sm:p-6">
+    <Card className="relative w-full max-w-[400px] rounded-2xl border border-border bg-card/90 p-5 text-center shadow-xl backdrop-blur-xl sm:p-6">
       <CardHeader className="mb-3 space-y-1 p-0">
-        <div className="mx-auto mb-1 flex size-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20">
+        <div className="mx-auto mb-1 flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20">
           <ShieldCheck className="size-4" />
         </div>
-        <CardTitle className="font-semibold text-lg text-white tracking-tight sm:text-xl">
+        <CardTitle className="font-semibold text-card-foreground text-lg tracking-tight sm:text-xl">
           Two-factor verification
         </CardTitle>
-        <CardDescription className="text-xs text-zinc-400 leading-relaxed">
-          We sent a 6-digit code to <span className="font-medium text-emerald-300">{email}</span>.
+        <CardDescription className="text-muted-foreground text-xs leading-relaxed">
+          We sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>.
         </CardDescription>
       </CardHeader>
 
@@ -98,41 +98,41 @@ export function OtpForm() {
               <InputOTPGroup className="gap-1">
                 <InputOTPSlot
                   index={0}
-                  className="size-9 rounded-md border-zinc-800 bg-zinc-900/60 text-zinc-100 focus:border-emerald-500 focus:ring-emerald-500/30"
+                  className="size-9 rounded-md border-input bg-background/70 text-foreground focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
                 <InputOTPSlot
                   index={1}
-                  className="size-9 rounded-md border-zinc-800 bg-zinc-900/60 text-zinc-100 focus:border-emerald-500 focus:ring-emerald-500/30"
+                  className="size-9 rounded-md border-input bg-background/70 text-foreground focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
                 <InputOTPSlot
                   index={2}
-                  className="size-9 rounded-md border-zinc-800 bg-zinc-900/60 text-zinc-100 focus:border-emerald-500 focus:ring-emerald-500/30"
+                  className="size-9 rounded-md border-input bg-background/70 text-foreground focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </InputOTPGroup>
-              <InputOTPSeparator className="text-zinc-600" />
+              <InputOTPSeparator className="text-muted-foreground" />
               <InputOTPGroup className="gap-1">
                 <InputOTPSlot
                   index={3}
-                  className="size-9 rounded-md border-zinc-800 bg-zinc-900/60 text-zinc-100 focus:border-emerald-500 focus:ring-emerald-500/30"
+                  className="size-9 rounded-md border-input bg-background/70 text-foreground focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
                 <InputOTPSlot
                   index={4}
-                  className="size-9 rounded-md border-zinc-800 bg-zinc-900/60 text-zinc-100 focus:border-emerald-500 focus:ring-emerald-500/30"
+                  className="size-9 rounded-md border-input bg-background/70 text-foreground focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
                 <InputOTPSlot
                   index={5}
-                  className="size-9 rounded-md border-zinc-800 bg-zinc-900/60 text-zinc-100 focus:border-emerald-500 focus:ring-emerald-500/30"
+                  className="size-9 rounded-md border-input bg-background/70 text-foreground focus:border-primary focus:ring-1 focus:ring-primary/30"
                 />
               </InputOTPGroup>
             </InputOTP>
 
-            {error && <p className="text-[11px] text-rose-400">{error}</p>}
+            {error && <p className="text-[11px] text-destructive">{error}</p>}
           </div>
 
           <Button
             type="submit"
             disabled={otpValue.length < 6 || isSubmitting}
-            className="flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 font-medium text-xs text-zinc-950 shadow-emerald-950/40 shadow-md transition-colors hover:bg-emerald-400 disabled:opacity-60"
+            className="flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-primary font-medium text-primary-foreground text-xs shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60"
           >
             {isSubmitting ? (
               <>
@@ -149,25 +149,25 @@ export function OtpForm() {
         </form>
 
         <div className="space-y-3 pt-1 text-center">
-          <p className="text-[11px] text-zinc-400">
+          <p className="text-[11px] text-muted-foreground">
             Didn&apos;t receive a code?{" "}
             {countdown > 0 ? (
-              <span className="font-medium text-zinc-500">Resend in {countdown}s</span>
+              <span className="font-medium text-muted-foreground">Resend in {countdown}s</span>
             ) : (
               <button
                 type="button"
                 onClick={handleResend}
-                className="font-medium text-emerald-400 underline underline-offset-2 hover:text-emerald-300"
+                className="font-medium text-primary underline underline-offset-2 hover:opacity-80"
               >
                 Resend code
               </button>
             )}
           </p>
 
-          <div className="border-zinc-800/80 border-t pt-3">
+          <div className="border-border border-t pt-3">
             <Link
               href="/auth/login"
-              className="inline-flex items-center gap-1.5 text-xs text-zinc-400 transition-colors hover:text-emerald-400"
+              className="inline-flex items-center gap-1.5 text-muted-foreground text-xs transition-colors hover:text-primary"
             >
               <ArrowLeft className="size-3.5" />
               <span>Back to log in</span>

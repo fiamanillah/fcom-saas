@@ -56,9 +56,7 @@ export function Logo({
 
   return (
     <div className={cn("inline-flex select-none items-center gap-2.5", className)} {...props}>
-      <div className="flex items-center justify-center rounded-lg bg-primary/10 p-1.5 ring-1 ring-primary/20 backdrop-blur-sm">
-        <SyncDocketIcon className={cn(currentSize.icon, iconClassName)} />
-      </div>
+      <SyncDocketIcon className={cn(currentSize.icon, iconClassName)} />
       {showWordmark && (
         <span
           className={cn(
